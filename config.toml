@@ -9,13 +9,14 @@
     allowAdd        = 0 #是否允许添加账号（0允许1不允许）不允许添加时则只允许已有账号登录
     allowNum        = 99 #允许添加账号的最大数量,-1为不限制
     cookieAutoCheck = 1 #自动检测所有cookie并进行失效删除/禁用，0为不检测，1为失效禁用，2为失效删除(每个小时检测一次)
+    UserAgent       ="Mozilla/5.0 (Linux; Android 8.0.0; BKL-AL00 Build/HUAWEIBKL-AL00; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/76.0.3809.89 Mobile Safari/537.36 T7/11.19 SP-engine/2.15.0 baiduboxapp/11.19.5.10 (Baidu; P1 8.0.0)"
 
 
 #web服务设置
 [server]
     address         = ":5701" #端口号设置
     serverRoot      = "public" #静态目录设置，请勿更改
-    serverAgent     = "JDC" #服务端UA
+    serverAgent     = "JDCookie" #服务端UA
 
 #模板设置
 [viewer]
