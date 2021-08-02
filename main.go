@@ -20,6 +20,7 @@ import (
 var QLheader map[string]string
 var path string
 var QLurl string
+var ua string
 var Config string = `
 #公告设置
 [app]
