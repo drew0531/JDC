@@ -19,10 +19,11 @@ import (
 var QLheader map[string]string
 var path string
 var QLurl string
+var ua string
 var Config string = `
 #公告设置
 [app]
-    path            = "QL" #青龙面板映射文件夹名称,一般为QL或ql
+    path            = "/ql" #青龙面板映射文件夹名称,一般为QL或ql
     QLip            = "http://127.0.0.1" #青龙面板的ip
     QLport          = "5700" #青龙面板的端口，默认为5700
     notice          = "使用京东扫描二维码登录" #公告/说明
@@ -30,6 +31,7 @@ var Config string = `
     logName         = "chinnkarahoi_jd_scripts_jd_bean_change" #日志脚本名称
     allowAdd        = 0 #是否允许添加账号（0允许1不允许）不允许添加时则只允许已有账号登录
     allowNum        = 99 #允许添加账号的最大数量,-1为不限制
+    UA              ="Mozilla/5.0 (Linux; Android 8.0.0; BKL-AL00 Build/HUAWEIBKL-AL00; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/76.0.3809.89 Mobile Safari/537.36 T7/11.19 SP-engine/2.15.0 baiduboxapp/11.19.5.10 (Baidu; P1 8.0.0)"
 
 
 #web服务设置
@@ -46,6 +48,9 @@ var Config string = `
 func main() {
 	//检查配置文件
 	checkConfig()
+	
+	//GET UA
+	ua = g.Cfg().GetString("app.UA")
 
 	//设置ptah
 	path = g.Cfg().GetString("app.path")
@@ -598,10 +603,6 @@ func parseCookie(raw string) map[string]string {
 
 }
 
-//获取随机UA
-var UA = func() string {
-	return "jdapp;android;12.0.5;11;0393465333165363-" + fmt.Sprint(time.Now().Unix()) + ";network/wifi;model/M2102K1C;osVer/30;appBuild/88681;partner/lc001;eufv/1;jdSupportDarkMode/0;Mozilla/5.0 (Linux; Android 11; M2102K1C Build/RKQ1.201112.002; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/77.0.3865.120 MQQBrowser/6.2 TBS/045534 Mobile Safari/537.36"
-}
 
 //检测登录
 func checkLogin(token string, okl_token string, cookies string) (int, string) {
@@ -616,7 +617,7 @@ func checkLogin(token string, okl_token string, cookies string) (int, string) {
 		"Accept-Language": "zh-cn",
 		"Cookie":          cookies,
 		"Referer":         loginUrl,
-		"User-Agent":      UA(),
+		"User-Agent":      ua,
 	}
 	c := g.Client()
 	c.SetHeaderMap(headers)
@@ -652,7 +653,7 @@ func getQrcode() interface{} {
 		"Accept":          "application/json, text/plain, */*",
 		"Accept-Language": "zh-cn",
 		"Referer":         loginUrl,
-		"User-Agent":      UA(),
+		"User-Agent":      ua,
 	}
 	c := g.Client()
 	c.SetHeaderMap(headers)
@@ -686,7 +687,7 @@ func getQrcode() interface{} {
 		"Accept":          "application/json, text/plain, */*",
 		"Accept-Language": "zh-cn",
 		"Referer":         loginUrl,
-		"User-Agent":      UA(),
+		"User-Agent":      ua,
 		"Host":            "plogin.m.jd.com",
 	}
 	c.SetHeaderMap(headers)
