@@ -13,5 +13,3 @@
 
 由使用本程序所产生的一切责任自负。
 
-## 前端仓库
-<https://github.com/huayu8/JDC-web>
